@@ -6,6 +6,14 @@ Formation Doctorale : Calcul Scientifique, HPC et Génie Logiciel Avancé — Cy
 
 [![Scientific Computing CI/CD Pipeline](https://github.com/medbeddi/phd_integrator_project/actions/workflows/ci_cd_pipeline.yml/badge.svg)](https://github.com/medbeddi/phd_integrator_project/actions/workflows/ci_cd_pipeline.yml)
 
+**Auteurs :**
+- Mohamed Beddi Cheikh Ahmed — C16630
+- Bouchra Dah — C10307
+
+Un rapport de synthèse exécutable (notebook Jupyter avec sorties, figures et courbes
+d'entraînement déjà générées) est disponible dans
+[`notebooks/rapport_final.ipynb`](notebooks/rapport_final.ipynb).
+
 ---
 
 ## 1. Vue d'ensemble

@@ -3,6 +3,10 @@ name = "phd-integrator-project"
 version = "0.1.0"
 description = "TP2 - Du Calcul Symbolique a l'IA Scientifique Multi-GPU avec Automatisation de la Reproductibilite (CI/CD)"
 readme = "README.md"
+authors = [
+    { name = "Mohamed Beddi Cheikh Ahmed", email = "mohamed.cheikhahmed@ipsas.tn" },
+    { name = "Bouchra Dah" },
+]
 requires-python = ">=3.10"
 dependencies = [
     "numpy>=1.26",
@@ -28,6 +32,8 @@ dev = [
     "pytest-cov>=4.1",
     "ruff>=0.3",
     "mypy>=1.9",
+    "ipykernel>=7.3.0",
+    "nbconvert>=7.17.1",
 ]
 
 [tool.ruff]
