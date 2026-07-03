@@ -49,6 +49,18 @@ def test_describe_array_reports_correct_metadata() -> None:
     assert attrs.f_contiguous is False
 
 
+def test_describe_array_handles_empty_array_boundary_case() -> None:
+    """Cas limite (Exercice 9.2): un tableau vide reste un np.ndarray valide,
+
+    contrairement a une chaine de caracteres qui doit etre rejetee des la
+    verification statique (mypy --strict), avant meme l'execution.
+    """
+    array = np.empty((0, 3), dtype=np.float64)
+    attrs = describe_array(array)
+    assert attrs.shape == (0, 3)
+    assert attrs.dtype == "float64"
+
+
 def test_c_and_f_contiguous_layouts_differ_in_strides() -> None:
     array = np.arange(12, dtype=np.float64).reshape(3, 4)
     c_array = as_c_contiguous(array)

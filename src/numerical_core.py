@@ -47,14 +47,6 @@ def describe_array(array: FloatArray) -> GridAttributes:
     )
 
 
-def _debug_inspect_grid() -> GridAttributes:
-    """Aide de debogage: mal-appelee volontairement avec une str au lieu d'un
-
-    np.ndarray, pour valider la barriere de type statique de la CI (mypy --strict).
-    """
-    return describe_array("this-should-be-an-ndarray")
-
-
 def as_c_contiguous(array: FloatArray) -> FloatArray:
     """Renvoie une version C-contiguous (stockage en ligne) du tableau."""
     return np.ascontiguousarray(array)
