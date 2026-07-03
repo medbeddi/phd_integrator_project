@@ -1,0 +1,56 @@
+name: Scientific Computing CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv (Rust-backed package manager)
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ matrix.python-version }}
+
+      - name: Sync isolated environment (no global/root install)
+        run: uv sync --python ${{ matrix.python-version }} --locked
+
+      - name: Static Analysis - Linting (Ruff)
+        run: uv run ruff check src/ tests/
+
+      - name: Static Analysis - Type Checking (Mypy)
+        run: uv run mypy --strict src/
+
+      - name: Execute Test Suite & Coverage (PyTest)
+        run: uv run pytest --cov=src --cov-report=xml --cov-report=term-missing tests/
+
+      - name: Generate scientific artefacts (figures, model weights)
+        if: matrix.python-version == '3.11'
+        run: |
+          uv run python -m src.symbolic_derivation
+          uv run python scripts/train_pinn.py
+          uv run python scripts/generate_plots.py
+
+      - name: Persist scientific artefacts
+        if: success() && matrix.python-version == '3.11'
+        uses: actions/upload-artifact@v4
+        with:
+          name: scientific-outputs
+          path: outputs/
+          if-no-files-found: warn
