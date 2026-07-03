@@ -231,8 +231,16 @@ l'énoncé :
 1. Un commit introduit une erreur de typage flagrante (passage d'une `str` à une fonction
    attendant un `np.ndarray`), provoquant l'échec de l'étape `mypy --strict` de la CI.
 2. Le commit suivant corrige l'erreur et ajoute un test de régression dédié
-   (`test_numerical_core_rejects_wrong_type_via_mypy` — cas limite documenté), avec un
-   message respectant les *Conventional Commits* (`fix: ...`).
+   (`test_describe_array_handles_empty_array_boundary_case` — cas limite documenté), avec
+   un message respectant les *Conventional Commits* (`fix: ...`).
+
+Séquence réelle observée sur ce dépôt (`gh run list`) :
+
+| Commit | Résultat CI | Étape bloquante |
+|---|---|---|
+| `feat: initial scientific computing pipeline ...` | ✅ succès | — |
+| `test: introduce intentional type error ...` | ❌ échec | `mypy --strict` (3.10/3.11/3.12) |
+| `fix: remove intentional type error ...` | ✅ succès | — |
 
 Voir `git log --oneline` pour l'enchaînement exact des commits correspondants.
 
